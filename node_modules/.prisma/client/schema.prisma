@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  id             Int             @id @default(autoincrement())
+  name           String          @unique
+  description    String
+  estatus        String          @db.Char(1)
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  course_teacher CourseTeacher[] @relation("course")
+  student        Student[]       @relation("course")
+
+  @@map("courses")
+}
+
+model Teacher {
+  id             Int             @id @default(autoincrement())
+  name           String
+  user           String          @unique
+  password       String
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  course_teacher CourseTeacher[] @relation("teacher")
+
+  @@map("teachers")
+}
+
+model CourseTeacher {
+  course     Course   @relation("course", fields: [id_course], references: [id])
+  id_course  Int
+  teacher    Teacher  @relation("teacher", fields: [id_teacher], references: [id])
+  id_teacher Int
+  estatus    String   @db.Char(1)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  courseId   String?
+
+  @@id([id_course, id_teacher])
+  @@map("course_teacher")
+}
+
+model Student {
+  ra         String   @id
+  id_course  Int
+  name       String
+  estatus    String   @db.Char(1)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  course     Course   @relation("course", fields: [id_course], references: [id])
+}
+
+model Documentation {
+  semesterYear             Int      @id
+  ra_student               String
+  tcer                     Int
+  tcerir                   Int
+  activityDescription      Int
+  internshipValidationDate Int
+  activityReport           Int
+  termination              Int
+  equivalenceReport        Int
+  observations             String
+  estatus                  String   @db.Char(1)
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+}
+
+model Appointment {
+  cod_appointment  Int      @id
+  ra_student       String
+  id_teacher       String
+  appointment_date DateTime
+  appointment_time DateTime
+  description      String
+  estatus          String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+}
