@@ -1,7 +1,9 @@
+import 'dotenv/config';
 import { Request, Response } from 'express';
 import { prisma } from '../../repositories/prismaCliente';
 import { AppError } from '../middlewares/Error/AppError';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 export class TeacherController {
   // get all
@@ -82,17 +84,19 @@ export class TeacherController {
   }
 
   //login
-  static async login(req: Request, res: Response): Promise<Response> {
+  static async login(req: Request, res: Response) {
     const { user, password } = req.body;
 
-    const userExist = await prisma.teacher.findUnique({ where: { user } });
+    const username = await prisma.teacher.findUnique({ where: { user } });
 
-    if (!userExist) {
-      throw new AppError(200, 'usuario ou senha invalido');
+    if (!username) {
+      throw new AppError(200, 'usuario ou senha invalidos');
     }
 
-    if (!(await bcrypt.compare(password, userExist.password))) throw new AppError(400, 'usuario ou senha invalido');
+    if (!(await bcrypt.compare(password, username.password))) throw new AppError(400, 'usuario ou senha invalidos');
 
-    
+    const token = jwt.sign({ id: username.id, name: username.name }, process.env.JWT_PASS ?? '', { expiresIn: '8h' });
+
+    console.log(token);
   }
 }

@@ -9,4 +9,6 @@ routesTeacher.post('/', TeacherController.create);
 routesTeacher.delete('/:id', TeacherController.delete);
 routesTeacher.patch('/:id', TeacherController.update);
 
+routesTeacher.post('/session', TeacherController.login);
+
 export default routesTeacher;
