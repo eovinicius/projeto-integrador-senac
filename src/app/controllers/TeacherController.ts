@@ -72,11 +72,16 @@ export class TeacherController {
     if (newPassword != confirmNewPassword) {
       throw new AppError(400, 'As senhas nao se coincidem !');
     }
+
     if (teacher) {
       const comparePassword = bcrypt.compare(currentPassword, teacher.password);
       if (!comparePassword) {
         throw new AppError(400, 'senha atual invalida');
       }
+    }
+
+    if (currentPassword === newPassword) {
+      throw new AppError(400, 'a nova senha nao pode ser igual a anterior');
     }
 
     await prisma.teacher.update({ where: { id: ide }, data: { name, user, password: newPassword } });
@@ -97,6 +102,12 @@ export class TeacherController {
 
     const token = jwt.sign({ id: username.id, name: username.name }, process.env.JWT_PASS ?? '', { expiresIn: '8h' });
 
-    console.log(token);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...userLogin } = username;
+
+    return res.status(200).json({
+      user: userLogin,
+      token: token,
+    });
   }
 }
