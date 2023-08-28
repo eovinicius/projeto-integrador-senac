@@ -18,6 +18,9 @@ export class TeacherController {
     const ide = Number(id);
 
     const teacher = await prisma.teacher.findUnique({ where: { id: ide } });
+
+    if (!teacher) throw new AppError(404, 'professor nao encostrado!');
+
     return res.status(200).json(teacher);
   }
 
@@ -51,6 +54,9 @@ export class TeacherController {
   static async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const ide = Number(id);
+
+    const verifyTeacherExists = await prisma.teacher.findUnique({ where: { id: ide } });
+    if (!verifyTeacherExists) throw new AppError(404, 'professor nao encostrado!');
 
     await prisma.teacher.delete({ where: { id: ide } });
 
@@ -103,10 +109,12 @@ export class TeacherController {
     const token = jwt.sign({ id: username.id, name: username.name }, process.env.JWT_PASS ?? '', { expiresIn: '8h' });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userLogin } = username;
+    const { password: _, ...userLogged } = username;
+
+    res.setHeader('Authorization', `Bearer ${token}`);
 
     return res.status(200).json({
-      user: userLogin,
+      user: userLogged,
       token: token,
     });
   }

@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { prisma } from '../../repositories/prismaCliente';
 import { AppError } from '../middlewares/Error/AppError';
 
-
 export class CourseController {
   // get all
   static async index(req: Request, res: Response): Promise<Response> {
@@ -16,6 +15,9 @@ export class CourseController {
     const ide = Number(id);
 
     const course = await prisma.course.findUnique({ where: { id: ide } });
+
+    if (!course) throw new AppError(404, 'curso nao encostrado!');
+
     return res.status(200).json(course);
   }
 

@@ -13,6 +13,9 @@ export class StudentController {
   static async show(req: Request, res: Response): Promise<Response> {
     const { ra } = req.params;
     const student = await prisma.student.findUnique({ where: { ra } });
+
+    if (!student) throw new AppError(404, 'aluno nao encostrado!');
+
     return res.status(200).json(student);
   }
 
@@ -31,6 +34,10 @@ export class StudentController {
   // delete
   static async delete(req: Request, res: Response): Promise<Response> {
     const { ra } = req.params;
+
+    const verifyStudentExists = await prisma.student.findUnique({ where: { ra } });
+
+    if (!verifyStudentExists) throw new AppError(404, 'aluno nao encostrado!');
 
     await prisma.student.delete({ where: { ra } });
 
