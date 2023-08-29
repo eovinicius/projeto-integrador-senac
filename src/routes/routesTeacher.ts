@@ -1,15 +1,16 @@
 import { Router } from 'express';
-import { TeacherController } from '../app/controllers/TeacherController';
-import { authMiddleware } from '../app/middlewares/authMiddleware';
+import { GetAllTeacherController } from '../app/controllers/Teacher/GetAllTeacherController';
+import { GetByIdTeacherController } from '../app/controllers/Teacher/GetByIdTeacherController';
+import { CreateTeacherController } from '../app/controllers/Teacher/CreateTeacherController';
+import { DeleteTeacherController } from './../app/controllers/Teacher/DeleteTeacherController';
+import { UpdateTeacherController } from '../app/controllers/Teacher/UpdateTeacherController';
 
 const routesTeacher = Router();
 
-routesTeacher.get('/', TeacherController.index);
-routesTeacher.get('/:id', TeacherController.show);
-routesTeacher.post('/', TeacherController.create);
-routesTeacher.delete('/:id', authMiddleware, TeacherController.delete);
-routesTeacher.patch('/:id', authMiddleware, TeacherController.update);
-
-routesTeacher.post('/login', TeacherController.login);
+routesTeacher.get('/', GetAllTeacherController.handle);
+routesTeacher.get('/:id', GetByIdTeacherController.handle);
+routesTeacher.post('/', CreateTeacherController.handle);
+routesTeacher.delete('/:id', DeleteTeacherController.handle);
+routesTeacher.patch('/:id', UpdateTeacherController.handle);
 
 export default routesTeacher;
