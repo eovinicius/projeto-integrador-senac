@@ -21,6 +21,16 @@ export class CourseController {
     return res.status(200).json(course);
   }
 
+  static async getByStatus(req: Request, res: Response): Promise<Response> {
+    const { estatus } = req.body;
+
+    const course = await prisma.course.findMany({ where: { estatus } });
+
+    if (!course) throw new AppError(404, 'curso nao encostrado!');
+
+    return res.status(200).json(course);
+  }
+
   // create
   static async create(req: Request, res: Response): Promise<Response> {
     const { name, description, estatus } = req.body;
@@ -49,16 +59,16 @@ export class CourseController {
     if (!verifyCourseExists) {
       throw new AppError(404, 'curso nao encostrado!');
     }
-    await prisma.course.delete({ where: { id: ide } });
+    await prisma.course.update({ where: { id: ide }, data: { estatus: 'inactive' } });
 
-    return res.status(204).json({ message: 'Usuario excluido com sucesso!' });
+    return res.status(204).json({ message: 'Curso excluido com sucesso!' });
   }
 
   //update
   static async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const ide = Number(id);
-    const { name, description, estatus } = req.body;
+    const { name, description } = req.body;
 
     const verifyCourseExists = await prisma.course.findUnique({ where: { id: ide } });
 
@@ -68,11 +78,13 @@ export class CourseController {
 
     const course = await prisma.course.findUnique({ where: { name } });
 
+    if (!course) throw new AppError(404, 'curso nao encostrado!');
+
     if (course && course.id != ide) {
       throw new AppError(400, 'Curso ja cadastrado!');
     }
 
-    await prisma.course.update({ where: { id: ide }, data: { name, description, estatus } });
+    await prisma.course.update({ where: { id: ide }, data: { name, description } });
     return res.status(204).json({ message: 'Usuario atualizado com sucesso!' });
   }
 }

@@ -98,24 +98,23 @@ export class TeacherController {
   static async login(req: Request, res: Response) {
     const { user, password } = req.body;
 
-    const username = await prisma.teacher.findUnique({ where: { user } });
+    const userLogged = await prisma.teacher.findUnique({ where: { user } });
 
-    if (!username) {
+    if (!userLogged) {
       throw new AppError(200, 'usuario ou senha invalidos');
     }
 
-    if (!(await bcrypt.compare(password, username.password))) throw new AppError(400, 'usuario ou senha invalidos');
+    if (!(await bcrypt.compare(password, userLogged.password))) throw new AppError(400, 'usuario ou senha invalidos');
 
-    const token = jwt.sign({ id: username.id, name: username.name }, process.env.JWT_PASS ?? '', { expiresIn: '8h' });
+    const token = jwt.sign({ id: userLogged.id, name: userLogged.name }, process.env.JWT_PASS ?? '', {
+      expiresIn: '8h',
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userLogged } = username;
+    const { password: _, ...loggedUser } = userLogged;
 
     res.setHeader('Authorization', `Bearer ${token}`);
 
-    return res.status(200).json({
-      user: userLogged,
-      token: token,
-    });
+    return res.status(200).json();
   }
 }

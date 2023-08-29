@@ -10,11 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  active
+  inactive
+}
+
 model Course {
   id             Int             @id @default(autoincrement())
   name           String          @unique
   description    String
-  estatus        String          @db.Char(1)
+  estatus        Status
   created_at     DateTime        @default(now())
   updated_at     DateTime        @updatedAt
   course_teacher CourseTeacher[] @relation("course")

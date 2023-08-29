@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AppError } from './Error/AppError';
 import { verify } from 'jsonwebtoken';
 import { prisma } from '../../repositories/prismaCliente';
@@ -19,6 +19,8 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   const user = await prisma.teacher.findUnique({ where: { id } });
 
   if (!user) throw new AppError(400, 'Nao autorizado!');
+
+  const { password, ...loggedUser } = user;
 
   return next();
 };
