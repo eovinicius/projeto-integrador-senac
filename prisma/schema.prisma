@@ -18,8 +18,7 @@ enum Status {
 model Course {
   id             Int             @id @default(autoincrement())
   name           String          @unique
-  description    String
-  estatus        Status
+  estatus        Status?          @default(active)
   created_at     DateTime        @default(now())
   updated_at     DateTime        @updatedAt
   course_teacher CourseTeacher[] @relation("course")

@@ -6,7 +6,7 @@ export class UpdateCourseController {
   static async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const ide = Number(id);
-    const { description } = req.body;
+    const { name } = req.body;
 
     const verifyCourseExists = await prisma.course.findUnique({ where: { id: ide } });
 
@@ -14,7 +14,7 @@ export class UpdateCourseController {
       throw new AppError(404, 'curso nao encostrado!');
     }
 
-    await prisma.course.update({ where: { id: ide }, data: { description } });
+    await prisma.course.update({ where: { id: ide }, data: { name } });
     return res.status(204).json({ message: 'Usuario atualizado com sucesso!' });
   }
 }

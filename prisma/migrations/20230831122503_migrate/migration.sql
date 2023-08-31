@@ -2,8 +2,7 @@
 CREATE TABLE `courses` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
-    `estatus` ENUM('active', 'inactive') NOT NULL,
+    `estatus` ENUM('active', 'inactive') NULL DEFAULT 'active',
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
