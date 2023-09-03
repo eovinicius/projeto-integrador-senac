@@ -12,9 +12,9 @@ export class DeleteCourseController {
       throw new AppError(404, 'curso nao encostrado!');
     }
 
-    if (verifyCourseExists.estatus == 'inactive') throw new AppError(400, 'curso ja esta desativado');
-    
-    await prisma.course.update({ where: { id: ide }, data: { estatus: 'inactive' } });
+    if (verifyCourseExists.estatus == false) throw new AppError(400, 'curso ja esta desativado');
+
+    await prisma.course.update({ where: { id: ide }, data: { estatus: false } });
 
     return res.status(204).json({ message: 'Curso excluido com sucesso!' });
   }
