@@ -52,7 +52,7 @@ model Student {
   ra         String   @id
   id_course  Int
   name       String
-  estatus    String   @db.Char(1)
+  estatus    Boolean? @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   course     Course   @relation("course", fields: [id_course], references: [id])

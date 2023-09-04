@@ -5,7 +5,7 @@
   "tabWidth": 2,
   "useTabs": false,
   "endOfLine": "auto",
-  "printWidth": 120,
+  "printWidth": 200,
   "trimTrailingWhitespace": true,
   "ignorePath": ".gitignore"
 }

@@ -9,10 +9,10 @@ export class DeleteCourseController {
 
     const verifyCourseExists = await prisma.course.findUnique({ where: { id: ide } });
     if (!verifyCourseExists) {
-      throw new AppError(404, 'curso nao encostrado!');
+      throw new AppError(403, 'curso nao encostrado!');
     }
 
-    if (verifyCourseExists.estatus == false) throw new AppError(400, 'curso ja esta desativado');
+    if (verifyCourseExists.estatus == false) throw new AppError(403, 'curso ja esta desativado');
 
     await prisma.course.update({ where: { id: ide }, data: { estatus: false } });
 

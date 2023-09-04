@@ -11,7 +11,7 @@ export class UpdateCourseController {
     const verifyCourseExists = await prisma.course.findUnique({ where: { id: ide } });
 
     if (!verifyCourseExists) {
-      throw new AppError(404, 'curso nao encostrado!');
+      throw new AppError(403, 'curso nao encostrado!');
     }
 
     await prisma.course.update({ where: { id: ide }, data: { name } });

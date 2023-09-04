@@ -9,7 +9,7 @@ export class GetByIdCourseController {
 
     const course = await prisma.course.findUnique({ where: { id: ide } });
 
-    if (!course) throw new AppError(404, 'curso nao encostrado!');
+    if (!course) throw new AppError(403, 'curso nao encostrado!');
 
     return res.status(200).json(course);
   }

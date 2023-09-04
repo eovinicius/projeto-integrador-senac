@@ -10,7 +10,7 @@ export class DeleteStudentController {
 
     if (!verifyStudentExists) throw new AppError(404, 'aluno nao encostrado!');
 
-    await prisma.student.delete({ where: { ra } });
+    await prisma.student.update({ where: { ra }, data: { estatus: false } });
 
     return res.status(204).send({ message: 'Aluno excluido com sucesso!' });
   }
