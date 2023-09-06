@@ -19,7 +19,7 @@ export class CreateStudentController {
     if (!validationResult.success) throw new AppError(403, 'verifique os dados de entrada');
 
     const verifyStudentExists = await prisma.student.findFirst({ where: { ra } });
-    if (verifyStudentExists) throw new AppError(403, 'Aluno ja cadastrado');
+    if (verifyStudentExists) return res.status(403).json({ message: 'aluno ja cadastrado', status: verifyStudentExists.estatus === true ? 'ativado' : 'desativado' });
 
     if (!(await prisma.course.findUnique({ where: { id: id_course } }))) throw new AppError(403, 'Curso invalido ou inexistente');
 

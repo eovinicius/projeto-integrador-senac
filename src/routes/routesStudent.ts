@@ -5,10 +5,12 @@ import { CreateStudentController } from '../app/controllers/Student/CreateStuden
 import { DeleteStudentController } from '../app/controllers/Student/DeleteStudentController';
 import { UpdateStudentController } from '../app/controllers/Student/UpdateStudentController';
 import { ActiveStudentController } from '../app/controllers/Student/ActiveStudentController';
+import { GetByStatusStudentController } from '../app/controllers/Student/GetByStatusStudentController';
 
 const routesStudent = Router();
 routesStudent.get('/', GetAllStudentController.handle);
 routesStudent.get('/:ra', GetByRaStudentController.handle);
+routesStudent.get('/por/status', GetByStatusStudentController.handle);
 routesStudent.post('/', CreateStudentController.handle);
 routesStudent.delete('/active/:ra', ActiveStudentController.handle);
 routesStudent.delete('/:ra', DeleteStudentController.handle);
