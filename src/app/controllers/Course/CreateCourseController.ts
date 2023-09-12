@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 const createSchema = z.object({
   name: z.string(),
-  estatus: z.boolean().nullable(),
+  status: z.boolean().nullable(),
 });
 
 export class CreateCourseController {
@@ -14,6 +14,8 @@ export class CreateCourseController {
 
     // validacao do body
     const validationResult = createSchema.safeParse({ name, status });
+
+    console.log(validationResult.success);
 
     if (!validationResult.success) throw new AppError(403, 'verifique os dados de entrada');
 

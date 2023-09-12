@@ -3,9 +3,10 @@ import { GetAllStudentController } from '../app/controllers/Student/GetAllStuden
 import { GetByRaStudentController } from '../app/controllers/Student/GetByRaStudentController';
 import { CreateStudentController } from '../app/controllers/Student/CreateStudentController';
 import { DeleteStudentController } from '../app/controllers/Student/DeleteStudentController';
-import { UpdateStudentController } from '../app/controllers/Student/UpdateStudentController';
 import { ActiveStudentController } from '../app/controllers/Student/ActiveStudentController';
 import { GetByStatusStudentController } from '../app/controllers/Student/GetByStatusStudentController';
+import { UpdateStudentController } from '../app/controllers/Student/UpdateStudentController';
+import { UpdateStudentControllerr } from '../app/controllers/UpdateStudentControllerr';
 
 const routesStudent = Router();
 routesStudent.get('/', GetAllStudentController.handle);
@@ -14,6 +15,5 @@ routesStudent.get('/por/status', GetByStatusStudentController.handle);
 routesStudent.post('/', CreateStudentController.handle);
 routesStudent.delete('/active/:ra', ActiveStudentController.handle);
 routesStudent.delete('/:ra', DeleteStudentController.handle);
-routesStudent.patch('/:ra', UpdateStudentController.handle);
-
+routesStudent.patch('/:ra', UpdateStudentControllerr.handle);
 export default routesStudent;
