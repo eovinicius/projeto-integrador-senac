@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { AppError } from '../middlewares/Error/AppError';
-import { prisma } from '../../repositories/prismaCliente';
+import { AppError } from '../../middlewares/Error/AppError';
+import { prisma } from '../../../repositories/prismaCliente';
 
 export class UpdateStudentControllerr {
   static async handle(req: Request, res: Response): Promise<Response> {

@@ -5,11 +5,12 @@ import { CreateStudentController } from '../app/controllers/Student/CreateStuden
 import { DeleteStudentController } from '../app/controllers/Student/DeleteStudentController';
 import { ActiveStudentController } from '../app/controllers/Student/ActiveStudentController';
 import { GetByStatusStudentController } from '../app/controllers/Student/GetByStatusStudentController';
-import { UpdateStudentController } from '../app/controllers/Student/UpdateStudentController';
-import { UpdateStudentControllerr } from '../app/controllers/UpdateStudentControllerr';
+// import { UpdateStudentController } from '../app/controllers/Student/UpdateStudentController';
+import { UpdateStudentControllerr } from '../app/controllers/Teacher/UpdateStudentControllerr';
+import { authMiddleware } from '../app/middlewares/authMiddleware';
 
 const routesStudent = Router();
-routesStudent.get('/', GetAllStudentController.handle);
+routesStudent.get('/',authMiddleware, GetAllStudentController.handle);
 routesStudent.get('/:ra', GetByRaStudentController.handle);
 routesStudent.get('/por/status', GetByStatusStudentController.handle);
 routesStudent.post('/', CreateStudentController.handle);

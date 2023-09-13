@@ -15,12 +15,16 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
   const token = authorization.split(' ')[1];
 
-  const { sub } = verify(token, process.env.JWT_PASS ?? '') as IPayload;
+  if (!token) throw new AppError(400, 'Nao autorizado!');
+
+  const { sub } = verify(token, '123@123') as IPayload;
 
   if (!sub) throw new AppError(400, 'Nao autorizado!');
 
+  const id = Number(sub);
+
   req.user = {
-    id: sub,
+    id,
   };
 
   return next();

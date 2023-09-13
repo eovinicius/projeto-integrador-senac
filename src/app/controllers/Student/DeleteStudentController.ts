@@ -5,13 +5,16 @@ import { AppError } from '../../middlewares/Error/AppError';
 export class DeleteStudentController {
   static async handle(req: Request, res: Response): Promise<Response> {
     const { ra } = req.params;
+    //const { id } = req.user;
 
-    const verifyStudentExists = await prisma.student.findUnique({ where: { ra } });
+    const student = await prisma.student.findUnique({ where: { ra } });
 
-    if (!verifyStudentExists) throw new AppError(404, 'aluno nao encostrado!');
+    if (!student) throw new AppError(404, 'aluno nao encostrado!');
 
-    if (verifyStudentExists.estatus === false) throw new AppError(403, 'Aluno ja esta desativado');
-    
+    //const teacher = await prisma.courseTeacher.findUnique({ where: { id } });
+
+    if (student.estatus === false) throw new AppError(403, 'Aluno ja esta desativado');
+
     await prisma.student.update({ where: { ra }, data: { estatus: false } });
 
     return res.status(204).send({ message: 'Aluno excluido com sucesso!' });
