@@ -2,7 +2,7 @@
 CREATE TABLE `courses` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `estatus` ENUM('active', 'inactive') NULL DEFAULT 'active',
+    `estatus` BOOLEAN NULL DEFAULT true,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -27,10 +27,9 @@ CREATE TABLE `teachers` (
 CREATE TABLE `course_teacher` (
     `id_course` INTEGER NOT NULL,
     `id_teacher` INTEGER NOT NULL,
-    `estatus` CHAR(1) NOT NULL,
+    `estatus` BOOLEAN NULL DEFAULT true,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
-    `courseId` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id_course`, `id_teacher`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -40,7 +39,7 @@ CREATE TABLE `Student` (
     `ra` VARCHAR(191) NOT NULL,
     `id_course` INTEGER NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `estatus` CHAR(1) NOT NULL,
+    `estatus` BOOLEAN NULL DEFAULT true,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -59,7 +58,7 @@ CREATE TABLE `Documentation` (
     `termination` INTEGER NOT NULL,
     `equivalenceReport` INTEGER NOT NULL,
     `observations` VARCHAR(191) NOT NULL,
-    `estatus` CHAR(1) NOT NULL,
+    `estatus` BOOLEAN NULL DEFAULT true,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -74,7 +73,7 @@ CREATE TABLE `Appointment` (
     `appointment_date` DATETIME(3) NOT NULL,
     `appointment_time` DATETIME(3) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `estatus` VARCHAR(191) NOT NULL,
+    `estatus` BOOLEAN NULL DEFAULT true,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
