@@ -13,10 +13,8 @@ export class UpdateStudentController {
     const { ra } = req.params;
     const { id_course, name } = req.body;
 
-    // validacao do body
-    const validationResult = createSchema.safeParse({ name, id_course });
-
-    if (!validationResult.success) throw new AppError(403, 'verifique os dados de entrada');
+    const validation = createSchema.safeParse({ name, id_course });
+    if (!validation.success) throw new AppError(403, 'Preencha os campos corretamente!');
 
     const student = await prisma.student.findUnique({ where: { ra } });
 

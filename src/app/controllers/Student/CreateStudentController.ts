@@ -14,9 +14,8 @@ export class CreateStudentController {
   static async handle(req: Request, res: Response): Promise<Response> {
     const { ra, id_course, name, status } = req.body;
 
-    const validationResult = createSchema.safeParse({ ra, id_course, name, status });
-
-    if (!validationResult.success) throw new AppError(403, 'verifique os dados de entrada');
+    const validation = createSchema.safeParse({ ra, id_course, name, status });
+    if (!validation.success) throw new AppError(403, 'Preencha os campos corretamente!');
 
     const verifyStudentExists = await prisma.student.findFirst({ where: { ra } });
     if (verifyStudentExists) return res.status(403).json({ message: 'aluno ja cadastrado', status: verifyStudentExists.estatus === true ? 'ativado' : 'desativado' });
