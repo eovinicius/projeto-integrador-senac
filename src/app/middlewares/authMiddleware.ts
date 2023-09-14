@@ -30,6 +30,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
     return next();
   } catch {
-    throw new AppError(400, 'Nao autorizado!');
+    throw new AppError(401, 'Nao autorizado!');
   }
 };
