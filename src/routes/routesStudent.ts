@@ -10,7 +10,7 @@ import { UpdateStudentControllerr } from '../app/controllers/Teacher/UpdateStude
 import { authMiddleware } from '../app/middlewares/authMiddleware';
 
 const routesStudent = Router();
-routesStudent.get('/',authMiddleware, GetAllStudentController.handle);
+routesStudent.get('/', authMiddleware, GetAllStudentController.handle);
 routesStudent.get('/:ra', GetByRaStudentController.handle);
 routesStudent.get('/por/status', GetByStatusStudentController.handle);
 routesStudent.post('/', CreateStudentController.handle);

@@ -22,7 +22,7 @@ export class authenticateTeacherController {
 
     if (!teacher) throw new AppError(401, 'usuario ou senha invalido!');
 
-    const verifyPasswordHash = compare(password, teacher.password);
+    const verifyPasswordHash = await compare(password, teacher.password);
 
     if (!verifyPasswordHash) throw new AppError(401, 'usuario ou senha invalido!');
 

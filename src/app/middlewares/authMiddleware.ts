@@ -10,22 +10,26 @@ interface IPayload {
 }
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const { authorization } = req.headers;
-  if (!authorization) throw new AppError(400, 'Nao autorizado!');
+  const BearerToken = req.headers.authorization;
+  try {
+    if (!BearerToken) throw new AppError(400, 'Nao autorizado!');
 
-  const token = authorization.split(' ')[1];
+    const token = BearerToken.split(' ')[1];
 
-  if (!token) throw new AppError(400, 'Nao autorizado!');
+    if (!token) throw new AppError(400, 'Nao autorizado!');
 
-  const { sub } = verify(token, '123@123') as IPayload;
+    const { sub } = verify(token, '123@123') as IPayload;
 
-  if (!sub) throw new AppError(400, 'Nao autorizado!');
+    if (!sub) throw new AppError(400, 'Nao autorizado!');
 
-  const id = Number(sub);
+    const id = Number(sub);
 
-  req.user = {
-    id,
-  };
+    req.user = {
+      id,
+    };
 
-  return next();
+    return next();
+  } catch {
+    throw new AppError(400, 'Nao autorizado!');
+  }
 };
