@@ -25,7 +25,7 @@ export class DeleteStudentController {
     });
 
     if (!courseTeacher) {
-      throw new AppError(403, 'Professor não está associado a este curso');
+      throw new AppError(401, 'Professor não está associado a este curso');
     }
 
     await prisma.student.update({ where: { ra }, data: { estatus: false } });

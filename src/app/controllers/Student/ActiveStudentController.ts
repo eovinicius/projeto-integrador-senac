@@ -5,12 +5,28 @@ import { AppError } from '../../middlewares/Error/AppError';
 export class ActiveStudentController {
   static async handle(req: Request, res: Response): Promise<Response> {
     const { ra } = req.params;
+    const { id } = req.user;
 
-    const verifyStudentExists = await prisma.student.findUnique({ where: { ra } });
+    const student = await prisma.student.findUnique({ where: { ra } });
 
-    if (!verifyStudentExists) throw new AppError(404, 'aluno nao encostrado!');
+    if (!student) throw new AppError(404, 'aluno nao encostrado!');
 
-    if (verifyStudentExists.estatus === true) throw new AppError(403, 'Aluno ja esta ativado');
+    if (student.estatus === true) throw new AppError(403, 'Aluno ja esta ativado');
+
+    const teacher = await prisma.teacher.findUnique({ where: { id } });
+
+    if (!teacher) throw new AppError(403, 'professor nao encontrado!');
+
+    const courseTeacher = await prisma.courseTeacher.findFirst({
+      where: {
+        id_course: student.id_course,
+        id_teacher: teacher.id,
+      },
+    });
+
+    if (!courseTeacher) {
+      throw new AppError(401, 'Professor não está associado a este curso');
+    }
 
     await prisma.student.update({ where: { ra }, data: { estatus: true } });
 
