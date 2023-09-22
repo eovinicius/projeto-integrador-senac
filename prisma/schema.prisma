@@ -30,6 +30,7 @@ model Teacher {
   created_at     DateTime        @default(now())
   updated_at     DateTime        @updatedAt
   course_teacher CourseTeacher[] @relation("teacher")
+  Appointment    Appointment[]
 
   @@map("teachers")
 }
@@ -48,13 +49,15 @@ model CourseTeacher {
 }
 
 model Student {
-  ra         String   @id
-  id_course  Int
-  name       String
-  estatus    Boolean? @default(true)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  course     Course   @relation("course", fields: [id_course], references: [id])
+  ra            String          @id
+  id_course     Int
+  name          String
+  estatus       Boolean?        @default(true)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  course        Course          @relation("course", fields: [id_course], references: [id])
+  Documentation Documentation[]
+  Appointment   Appointment[]
 }
 
 model Documentation {
@@ -71,16 +74,21 @@ model Documentation {
   estatus                  Boolean? @default(true)
   created_at               DateTime @default(now())
   updated_at               DateTime @updatedAt
+
+  student Student @relation(fields: [ra_student], references: [ra])
 }
 
 model Appointment {
   cod_appointment  Int      @id
   ra_student       String
-  id_teacher       String
+  id_teacher       Int
   appointment_date DateTime
   appointment_time DateTime
   description      String
   estatus          Boolean? @default(true)
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
+
+  student Student @relation(fields: [ra_student], references: [ra])
+  teacher Teacher @relation(fields: [id_teacher], references: [id])
 }
