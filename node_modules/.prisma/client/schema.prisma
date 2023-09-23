@@ -79,7 +79,7 @@ model Documentation {
 }
 
 model Appointment {
-  cod_appointment  Int      @id
+  cod_appointment  Int      @id @default(autoincrement())
   ra_student       String
   id_teacher       Int
   appointment_date DateTime

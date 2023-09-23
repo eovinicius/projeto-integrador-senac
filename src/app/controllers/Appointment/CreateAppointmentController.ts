@@ -13,7 +13,7 @@ interface IRequest {
 
 export class CreateCourseController {
   static async handle(req: Request, res: Response): Promise<Response> {
-    const { ra_student, id_teacher, appointment_date, appointment_time, description,estatus }: IRequest = req.body;
+    const { ra_student, id_teacher, appointment_date, appointment_time, description, estatus }: IRequest = req.body;
 
     const student = await prisma.student.findFirst({ where: { ra: ra_student } });
     if (!student) throw new AppError(403, 'professor nao existe!');
@@ -28,8 +28,9 @@ export class CreateCourseController {
         appointment_date,
         appointment_time,
         description,
-        estatus
+        estatus,
       },
     });
+    return res.status(201).json(appointment);
   }
 }
