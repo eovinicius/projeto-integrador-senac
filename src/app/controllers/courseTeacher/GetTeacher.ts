@@ -14,8 +14,6 @@ export class GetByIdCourseTeacher {
 
     const courseTeachers = await prisma.courseTeacher.findMany();
 
-    console.log(courseTeachers);
-
     return res.status(200).json(courseTeachers);
   }
 }

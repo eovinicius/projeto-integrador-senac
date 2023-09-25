@@ -8,6 +8,9 @@ export class UpdateAppointmentController {
     const cod = Number(cod_appointment);
     const { ra_student, id_teacher, appointment_date, appointment_time, description } = req.body;
 
+    const appointmentAlreadyExists = await prisma.appointment.findUnique({ where: { cod_appointment: cod } });
+    if (!appointmentAlreadyExists) throw new AppError(400, 'atendimento nao existe');
+
     const student = await prisma.student.findFirst({ where: { ra: ra_student } });
     if (!student) throw new AppError(403, 'professor nao existe!');
 
@@ -24,6 +27,6 @@ export class UpdateAppointmentController {
         description,
       },
     });
-    return res.status(201).json(appointment);
+    return res.status(200).json(appointment);
   }
 }

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CreateCourseTeacher } from '../app/controllers/courseTeacher/CreateCourseTeacher';
-import { GetByIdCourseTeacher } from '../app/controllers/courseTeacher/GetByIdTeacher';
+import { GetByIdCourseTeacher } from '../app/controllers/courseTeacher/GetTeacher';
 import { DeleteCoursoTeacher } from '../app/controllers/courseTeacher/DeleteCoursoTeacher';
 
 const routesCourseTeacher = Router();
