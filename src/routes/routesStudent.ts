@@ -7,11 +7,10 @@ import { ActiveStudentController } from '../app/controllers/Student/ActiveStuden
 import { GetByStatusStudentController } from '../app/controllers/Student/GetByStatusStudentController';
 // import { UpdateStudentController } from '../app/controllers/Student/UpdateStudentController';
 import { UpdateStudentControllerr } from '../app/controllers/Teacher/UpdateStudentControllerr';
-import { authMiddleware } from '../app/middlewares/authMiddleware';
+// import { authMiddleware } from '../app/middlewares/authMiddleware';
 
 const routesStudent = Router();
 
-routesStudent.use(authMiddleware);
 routesStudent.get('/', GetAllStudentController.handle);
 routesStudent.get('/:ra', GetByRaStudentController.handle);
 routesStudent.get('/por/status', GetByStatusStudentController.handle);
