@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { prisma } from '../../../repositories/prismaCliente';
 import { AppError } from '../../middlewares/Error/AppError';
 
-export class DeleteCoursoTeacher {
+export class DeleteCoursoTeacherController {
   static async handle(req: Request, res: Response): Promise<Response> {
-    const { id_course, id_teacher, status } = req.body;
+    const { id_course, id_teacher } = req.body;
 
     const course = await prisma.course.findFirst({ where: { id: id_course } });
     if (!course) throw new AppError(403, 'Curso nao existe!');
@@ -20,7 +20,7 @@ export class DeleteCoursoTeacher {
         },
       },
       data: {
-        estatus: status,
+        estatus: false,
       },
     });
 

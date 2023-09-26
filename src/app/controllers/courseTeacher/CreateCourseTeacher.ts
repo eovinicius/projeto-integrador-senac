@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../../../repositories/prismaCliente';
 import { AppError } from '../../middlewares/Error/AppError';
 
-export class CreateCourseTeacher {
+export class CreateCourseTeacherController {
   static async handle(req: Request, res: Response): Promise<Response> {
     const { id_course, id_teacher, status } = req.body;
 

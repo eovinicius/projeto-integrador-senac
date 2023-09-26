@@ -61,8 +61,8 @@ model Student {
 }
 
 model Documentation {
-  semesterYear             Int      @id //semestre ano 
-  ra_student               String // ra
+  semesterYear             Int //semestre ano 
+  ra_student               String   @unique // ra
   tcer                     Int //termo de compromisso de estagio remunerado
   tcernr                   Int // termo de compromisso de estagio nao remunerado
   activityDescription      Int //descricao das atividades

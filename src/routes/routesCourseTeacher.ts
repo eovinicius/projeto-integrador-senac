@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { CreateCourseTeacher } from '../app/controllers/courseTeacher/CreateCourseTeacher';
-import { GetByIdCourseTeacher } from '../app/controllers/courseTeacher/GetTeacher';
-import { DeleteCoursoTeacher } from '../app/controllers/courseTeacher/DeleteCoursoTeacher';
+import { CreateCourseTeacherController } from '../app/controllers/courseTeacher/CreateCourseTeacher';
+import { GetByIdCourseTeacherController } from '../app/controllers/courseTeacher/GetTeacher';
+import { DeleteCoursoTeacherController } from '../app/controllers/courseTeacher/DeleteCoursoTeacher';
+
 
 const routesCourseTeacher = Router();
 
-routesCourseTeacher.post('/', CreateCourseTeacher.handle);
-routesCourseTeacher.get('/', GetByIdCourseTeacher.handle);
-routesCourseTeacher.delete('/', DeleteCoursoTeacher.handle);
+routesCourseTeacher.post('/', CreateCourseTeacherController.handle);
+routesCourseTeacher.get('/', GetByIdCourseTeacherController.handle);
+routesCourseTeacher.delete('/', DeleteCoursoTeacherController.handle);
 export default routesCourseTeacher;
