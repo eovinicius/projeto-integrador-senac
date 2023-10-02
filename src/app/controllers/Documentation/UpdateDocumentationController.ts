@@ -15,18 +15,16 @@ interface IRequest {
   observations: string;
 }
 
-export class CreateDocumentationController {
+export class UpdateDocumentationController {
   static async handle(req: Request, res: Response): Promise<Response> {
     const { semesterYear, ra_student, tcer, tcernr, activityDescription, internshipValidationDate, activityReport, termination, equivalenceReport, observations }: IRequest = req.body;
 
     const documentation = await prisma.documentation.findFirst({ where: { semesterYear, ra_student } });
 
-    if (documentation) throw new AppError(400, 'documentacao ja cadastrada!');
+    if (!documentation) throw new AppError(400, 'documentacao nao existe!');
 
-    const student = await prisma.student.findFirst({ where: { ra: ra_student } });
-    if (!student) throw new AppError(403, 'aluno nao existe!');
-
-    const newDocumentation = await prisma.documentation.update({where: {semesterYear, ra_student},
+    await prisma.documentation.update({
+      where: { semesterYear, ra_student },
       data: {
         semesterYear,
         ra_student,
@@ -41,6 +39,6 @@ export class CreateDocumentationController {
       },
     });
 
-    return res.status(201).json(newDocumentation);
+    return res.status(204).send();
   }
 }
