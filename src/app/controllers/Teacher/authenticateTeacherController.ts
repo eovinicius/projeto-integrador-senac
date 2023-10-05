@@ -16,7 +16,7 @@ export class authenticateTeacherController {
     const { user, password } = req.body;
 
     const validation = bodySchema.safeParse({ user, password });
-    if (!validation.success) throw new AppError(403, 'Preencha os campos corretamente!');
+    if (!validation.success) throw new AppError(401, 'Preencha os campos corretamente!');
 
     const teacher = await prisma.teacher.findUnique({ where: { user } });
 

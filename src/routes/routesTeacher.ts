@@ -16,6 +16,6 @@ routesTeacher.patch('/:id', UpdateTeacherController.handle);
 
 
 //session
-routesTeacher.post('/session', authenticateTeacherController.handle);
+routesTeacher.post('/session/login', authenticateTeacherController.handle);
 
 export default routesTeacher;
